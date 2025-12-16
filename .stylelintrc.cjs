@@ -1,105 +1,53 @@
-/**
- * Stylelint 通用配置（CSS / SCSS / Vue）
- */
+// @see https://stylelint.bootcss.com/
+
 module.exports = {
-  /**
-   * 继承标准 SCSS 规则集
-   */
-  extends: ['stylelint-config-standard-scss'],
-
-  /**
-   * 默认使用 SCSS 解析器
-   */
-  customSyntax: 'postcss-scss',
-
-  /**
-   * 针对不同文件的解析处理
-   */
+  extends: [
+    'stylelint-config-standard', // 配置stylelint拓展插件
+    'stylelint-config-html/vue', // 配置 vue 中 template 样式格式化
+    'stylelint-config-standard-scss', // 配置stylelint scss插件
+    'stylelint-config-recommended-vue/scss', // 配置 vue 中 scss 样式格式化
+    'stylelint-config-recess-order', // 配置stylelint css属性书写顺序插件,
+    'stylelint-config-prettier', // 配置stylelint和prettier兼容
+  ],
   overrides: [
     {
-      files: ['**/*.vue'],
+      files: ['**/*.(scss|css|vue|html)'],
+      customSyntax: 'postcss-scss',
+    },
+    {
+      files: ['**/*.(html|vue)'],
       customSyntax: 'postcss-html',
     },
   ],
-
-  /**
-   * 忽略的文件
-   */
   ignoreFiles: [
-    '**/node_modules/**',
-    '**/dist/**',
-    '**/build/**',
-    '**/coverage/**',
+    '**/*.js',
+    '**/*.jsx',
+    '**/*.tsx',
+    '**/*.ts',
+    '**/*.json',
+    '**/*.md',
+    '**/*.yaml',
   ],
-
   /**
-   * 规则配置
+   * null  => 关闭该规则
+   * always => 必须
    */
   rules: {
-    /* =========================
-     * 基础风格
-     * ========================= */
-
-    indentation: 2,
-    'string-quotes': 'single',
-    'color-hex-case': 'lower',
-    'number-leading-zero': 'always',
-    'font-family-name-quotes': 'always-where-recommended',
-
-    /* =========================
-     * SCSS 相关
-     * ========================= */
-
-    // 使用 scss 规则替代 css 原生规则
-    'at-rule-no-unknown': null,
-    'scss/at-rule-no-unknown': true,
-
-    // SCSS 变量命名规范
-    'scss/dollar-variable-pattern': [
-      '^[_a-z]+[a-z0-9-]*$',
-      {
-        message: 'SCSS 变量名请使用 kebab-case',
-      },
-    ],
-
-    // 禁止不安全的 @extend
-    'scss/at-extend-no-missing-placeholder': true,
-
-    /* =========================
-     * 选择器 / 可读性
-     * ========================= */
-
-    // 限制嵌套层级
-    'max-nesting-depth': 4,
-
-    // 禁止空块
-    'block-no-empty': true,
-
-    // 允许 Vue 深度选择器
-    'selector-pseudo-element-no-unknown': [
+    'value-keyword-case': null, // 在 css 中使用 v-bind，不报错
+    'no-descending-specificity': null, // 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器
+    'function-url-quotes': 'always', // 要求或禁止 URL 的引号 "always(必须加上引号)"|"never(没有引号)"
+    'no-empty-source': null, // 关闭禁止空源码
+    'selector-class-pattern': null, // 关闭强制选择器类名的格式
+    'property-no-unknown': null, // 禁止未知的属性(true 为不允许)
+    'block-opening-brace-space-before': 'always', //大括号之前必须有一个空格或不能有空白符
+    'value-no-vendor-prefix': null, // 关闭 属性值前缀 --webkit-box
+    'property-no-vendor-prefix': null, // 关闭 属性前缀 -webkit-mask
+    'selector-pseudo-class-no-unknown': [
+      // 不允许未知的选择器
       true,
       {
-        ignorePseudoElements: ['v-deep', 'deep'],
+        ignorePseudoClasses: ['global', 'v-deep', 'deep'], // 忽略属性，修改element默认样式的时候能使用到
       },
     ],
-
-    // class 命名（可选 BEM，默认不强制）
-    // 'selector-class-pattern': '^[a-z]([a-z0-9-]+)?(__[a-z0-9-]+)?(--[a-z0-9-]+)?$',
-
-    /* =========================
-     * 工程实践
-     * ========================= */
-
-    // 允许 !important（如需严格可改 true）
-    'declaration-no-important': null,
-
-    // 允许 calc 中的运算
-    'function-calc-no-unspaced-operator': null,
-
-    // 关闭兼容性限制（现代项目）
-    'property-no-vendor-prefix': null,
-    'value-no-vendor-prefix': null,
-    'selector-no-vendor-prefix': null,
-    'media-feature-name-no-vendor-prefix': null,
   },
 }
