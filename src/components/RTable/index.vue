@@ -33,6 +33,7 @@
   const gridRef = ref<VxeGridInstance | null>(null)
   const props = withDefaults(
     defineProps<{
+      primaryKey: string
       columns: VxeGridPropTypes.Columns
       showForm?: boolean
       showPager?: boolean
@@ -67,7 +68,12 @@
         pageNum: number
       },
     ): void
-    (e: 'toolbar-button-click', btn: VxeToolbarPropTypes.ButtonConfig): void
+    (
+      e: 'toolbar-button-click',
+      btn: VxeToolbarPropTypes.ButtonConfig,
+      selection: any[],
+      currentRow: any,
+    ): void
   }>()
 
   const pager = ref<PagerVO>({
@@ -109,11 +115,15 @@
     cellConfig: {
       padding: true,
     },
+    radioConfig: {
+      trigger: 'row', // 👈 关键：点击整行触发单选
+      highlight: true, // 选中行高亮
+    },
     rowConfig: {
       isCurrent: true,
       isHover: true,
       useKey: true,
-      keyField: '',
+      keyField: props.primaryKey,
     },
     sortConfig: {
       remote: true,
@@ -154,6 +164,7 @@
             //   .map((item) => `${item.field}|${item.order}`)
             //   .join(','),
           }
+
           return props.fetchTableList(params.value)
         },
       },
@@ -170,13 +181,55 @@
       })
     },
     toolbarButtonClick({ button }) {
-      emit('toolbar-button-click', button)
+      const $grid = gridRef.value
+      if ($grid) {
+        // 获取复选框选中的所有行
+        const selection = $grid.getCheckboxRecords()
+        // 获取当前行选中的单行（针对 radio 或 isCurrent 模式）
+        const currentRow = $grid.getCurrentRecord()
+
+        // 将选中的数据作为第二个参数传给父组件
+        emit('toolbar-button-click', button, selection, currentRow)
+      }
+    },
+    // 关键：监听代理查询结束
+    async proxyQuery() {
+      // 稍微延迟，确保组件内部状态同步完成
+      await nextTick()
+      const $grid = gridRef.value
+      if ($grid) {
+        const data = $grid.getData()
+        if (data && data.length > 0) {
+          const firstRow = data[0]
+          // 执行选中
+          $grid.clearCheckboxRow() // 先清空之前的
+          $grid.setRadioRow(firstRow)
+          $grid.setCheckboxRow(firstRow, true)
+          $grid.setCurrentRow(firstRow)
+        }
+      }
     },
   }
 
   const handleSearch = async (query: any) => {
     pager.value.pageNum = 1
     params.value = query
+    await nextTick()
     gridRef.value?.commitProxy('query')
   }
+
+  const query = async (isResetPager = false) => {
+    await nextTick()
+    if (isResetPager) {
+      // 如果需要从第一页开始查（通常用于搜索按钮）
+      gridRef.value?.commitProxy('reload')
+    } else {
+      // 如果只是刷新当前页数据（通常用于编辑保存后的局部刷新）
+      gridRef.value?.commitProxy('query')
+    }
+  }
+
+  defineExpose({
+    query,
+  })
 </script>

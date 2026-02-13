@@ -71,6 +71,16 @@ export const constantRoutes = [
         },
         component: () => import('@/views/system/user/index.vue'),
       },
+      // {
+      //   path: '/system/user/detail',
+      //   name: 'UserDetail',
+      //   meta: {
+      //     title: '用户管理详情',
+      //     hidden: true,
+      //     icon: 'User',
+      //   },
+      //   component: () => import('@/views/system/user/detail.vue'),
+      // },
       {
         path: '/system/permission',
         name: 'permission',

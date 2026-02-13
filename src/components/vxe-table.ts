@@ -7,7 +7,6 @@ import {
 } from 'vxe-table'
 import type { App } from 'vue'
 
-
 const vxeTableComponents = [
   VxeTable,
   VxeColumn,

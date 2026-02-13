@@ -2,6 +2,8 @@ import type { requestResultInter } from '../../type'
 export interface loginForm {
   username: string
   password: string
+  validateCodeValue: string
+  validateCodeKey: string
 }
 
 interface dataInter {
@@ -51,4 +53,13 @@ interface userDTOInter {
 
 export interface userResponse extends requestResultInter<userDTOInter> {
   data: userDTOInter
+}
+
+interface validateCodeVo {
+  codeKey: string
+  codeValue: string
+}
+
+export interface validateCodeResponse extends requestResultInter<validateCodeVo> {
+  data: validateCodeVo
 }

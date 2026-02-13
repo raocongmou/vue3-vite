@@ -5,6 +5,7 @@ import type {
   userInfoResponse,
   userResponse,
   userQueryInter,
+  validateCodeResponse,
 } from './type'
 
 /**
@@ -45,5 +46,41 @@ export function getUserList(params: userQueryInter) {
   return request<any, userResponse>({
     url: '/user/list',
     params,
+  })
+}
+
+/**
+ * 用户新增
+ * @param data
+ * @returns
+ */
+export function addUser(data: any) {
+  return request<any, userResponse>({
+    url: '/user',
+    method: 'post',
+    data,
+  })
+}
+
+/**
+ * 用户修改
+ * @param data
+ * @returns
+ */
+export function updateUser(data: any) {
+  return request<any, userResponse>({
+    url: '/user',
+    method: 'put',
+    data,
+  })
+}
+
+/**
+ * 获取验证码
+ * @returns 
+ */
+export function generateValidateCode() {
+  return request<any, validateCodeResponse>({
+    url: '/user/generateValidateCode?time=' + Date.now(),
   })
 }

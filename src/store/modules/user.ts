@@ -26,7 +26,7 @@ const useUserStore = defineStore('user', () => {
       LocalStorage.set('token', res.data.token)
       return Promise.resolve(res.msg)
     } else {
-      return Promise.reject(new Error(res.msg))
+      return Promise.reject(res.msg)
     }
   }
 
@@ -48,7 +48,7 @@ const useUserStore = defineStore('user', () => {
   const fetchUserInfo = async () => {
     const res = await getUserInfo()
     console.log('fetchUserInfo', res)
-    
+
     if (res.code === 200) {
       userInfo.value = res.data
       return 'ok'

@@ -8,13 +8,13 @@ import '@/styles/index.scss'
 import 'vxe-pc-ui/styles/cssvar.scss'
 import 'vxe-table/styles/cssvar.scss'
 import { lazyVxeTable } from '@/components/vxe-table'
-import zhCN from 'vxe-table/lib/locale/lang/zh-CN'
 import App from './App.vue'
 import Components from '@/components'
 import pinia from './store'
 import router from './router'
-import './permission.ts'
+import './permission'
 import './plugins'
+import i18n from './i18n'
 
 import VxeUIBase from 'vxe-pc-ui'
 import 'vxe-pc-ui/es/style.css'
@@ -25,6 +25,7 @@ app
   .use(ElementPlus, {
     size: '',
   })
+  .use(i18n)
   .use(VxeUIBase)
   .use(lazyVxeTable)
   .use(Components)

@@ -43,9 +43,9 @@
     tabsStore.tabs = tabsStore.tabs.filter((tab) => tab.path !== targetName)
   }
 
-const handleTabChange = (tab: TabPaneName) => {
-    console.log('tab', tab);
-    
+  const handleTabChange = (tab: TabPaneName) => {
+    console.log('tab', tab)
+
     if (typeof tab === 'string') {
       router.push(tab)
     }

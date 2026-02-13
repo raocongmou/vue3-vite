@@ -43,14 +43,6 @@ const useIndex = () => {
       icon: 'vxe-icon-eye-fill',
       permissionCode: 'roleManageActionDelete',
     },
-    {
-      name: '分配角色',
-      code: BtnCodeConstant.view,
-      status: 'info',
-      icon: 'vxe-icon-add-users',
-      color: '#eb591d',
-      permissionCode: 'roleManageActionDelete',
-    },
   ])
   const formConfig = ref<FormItem[]>([
     {
@@ -94,77 +86,28 @@ const useIndex = () => {
       fixed: 'left',
     },
     {
-      field: 'username',
-      title: '用户名',
-      align: 'center',
-      minWidth: '80px',
-    },
-    {
-      field: 'roleList',
+      field: 'roleName',
       title: '角色名称',
       align: 'center',
       minWidth: '80px',
-      formatter({ cellValue }) {
-        if (!cellValue || !Array.isArray(cellValue)) {
-          return '-'
-        }
-        // 提取角色名称并用逗号分隔
-        return cellValue
-          .map((role: any) => role.roleName || role.name)
-          .join('，')
-      },
     },
     {
-      field: 'nickname',
-      title: '昵称',
-      align: 'center',
-      minWidth: '80px',
-    },
-    {
-      field: 'phone',
-      title: '手机号码',
+      field: 'roleKey',
+      title: '角色代码',
       align: 'center',
       minWidth: '80px',
     },
     {
       field: 'status',
-      title: '用户状态',
-      align: 'center',
-      minWidth: '80px',
-      formatter({ cellValue }) {
-        const item = statusList.find((item: any) => item.value === cellValue)
-        return item ? item.label : cellValue
-      },
-    },
-    {
-      field: 'gender',
-      title: '性别',
-      align: 'center',
-      minWidth: '80px',
-      formatter({ cellValue }) {
-        const item = genderList.find((item: any) => item.value === cellValue)
-        return item ? item.label : cellValue
-      },
-    },
-    {
-      field: 'email',
-      title: '邮箱',
+      title: '状态',
       align: 'center',
       minWidth: '80px',
     },
     {
-      field: 'avatar',
-      title: '用户头像',
+      field: 'remark',
+      title: '备注',
       align: 'center',
       minWidth: '80px',
-      cellRender: {
-        name: 'VxeImage',
-        props: {
-          width: 32,
-          height: 32,
-          circle: true, // 是否圆角
-        },
-      },
     },
     {
       field: 'createTime',
