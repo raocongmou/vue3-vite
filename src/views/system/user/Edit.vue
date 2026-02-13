@@ -108,7 +108,12 @@
 
       <vxe-form-item align="right" span="24">
         <template #default>
-          <vxe-button v-if="editStatus !== 'view'" type="submit" status="primary" :loading="loading">
+          <vxe-button
+            v-if="editStatus !== 'view'"
+            type="submit"
+            status="primary"
+            :loading="loading"
+          >
             确定
           </vxe-button>
           <vxe-button @click="visible = false">取消</vxe-button>

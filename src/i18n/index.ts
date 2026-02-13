@@ -23,7 +23,7 @@ const i18n = createI18n({
         well: '好',
         loginFailed: '登录失败!',
         validateCodeLength: '验证码长度为4!',
-        error_validate_code:'验证码错误!'
+        error_validate_code: '验证码错误!',
       },
     },
     en: {

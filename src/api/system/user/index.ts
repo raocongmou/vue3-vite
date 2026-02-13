@@ -77,7 +77,7 @@ export function updateUser(data: any) {
 
 /**
  * 获取验证码
- * @returns 
+ * @returns
  */
 export function generateValidateCode() {
   return request<any, validateCodeResponse>({
