@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { roleQueryInter } from './type'
+import { roleQueryInter, roleResponse } from './type'
 
 /**
  * 角色列表
@@ -7,7 +7,7 @@ import { roleQueryInter } from './type'
  * @returns
  */
 export function getRoleList(params: roleQueryInter) {
-  return request<any, roleQueryInter>({
+  return request<any, roleResponse>({
     url: '/role/list',
     params,
   })

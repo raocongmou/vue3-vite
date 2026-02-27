@@ -1,7 +1,9 @@
 import request from '@/utils/request'
 import type {
+  assignUserRolesForm,
   loginForm,
   loginResponse,
+  userRoleIdsResponse,
   userInfoResponse,
   userResponse,
   userQueryInter,
@@ -82,5 +84,26 @@ export function updateUser(data: any) {
 export function generateValidateCode() {
   return request<any, validateCodeResponse>({
     url: '/user/generateValidateCode?time=' + Date.now(),
+  })
+}
+
+/**
+ * 获取用户已分配的角色ID列表
+ */
+export function getUserRoleIds(params: { userId: number }) {
+  return request<any, userRoleIdsResponse>({
+    url: '/user/roleIds',
+    params,
+  })
+}
+
+/**
+ * 保存用户角色分配
+ */
+export function assignUserRoles(data: assignUserRolesForm) {
+  return request<any, any>({
+    url: '/user/assignRoles',
+    method: 'post',
+    data,
   })
 }

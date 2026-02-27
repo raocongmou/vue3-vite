@@ -49,7 +49,8 @@
                 v-model="form.validateCodeValue"
                 :placeholder="$t('login.validateCodePlaceholder')"
                 clearable
-                maxlength="4"
+                inputmode="numeric"
+                maxlength="10"
                 class="captcha-input"
               />
               <img
@@ -116,11 +117,11 @@
         message: t('login.validateCodeValidate'),
         trigger: 'blur',
       },
-      {
-        len: 4,
-        message: t('login.validateCodeLength'),
-        trigger: 'blur',
-      },
+      // {
+      //   len: 4,
+      //   message: t('login.validateCodeLength'),
+      //   trigger: 'blur',
+      // },
     ],
   })
   const formRef = ref<any>(null)
@@ -141,6 +142,7 @@
     formRef.value.validate(async (valid: boolean) => {
       if (valid) {
         try {
+          form.validateCodeValue = (form.validateCodeValue || '').trim()
           loading.value = true
           await userStore.login(form)
           loading.value = false
@@ -155,7 +157,10 @@
         } catch (err: any) {
           console.log('err', err)
           loading.value = false
-          ElNotification.error(err)
+          ElNotification.error({
+            title: t('login.loginFailed'),
+            message: typeof err === 'string' ? err : err?.message ?? String(err),
+          })
           await generateValidateCodeApi()
         } finally {
           loading.value = false
@@ -172,6 +177,7 @@
     console.log('res', res)
     validateCodeImg.value = res.data.codeValue
     form.validateCodeKey = res.data.codeKey
+    form.validateCodeValue = ''
   }
 
   const refreshValidateCode = async () => {

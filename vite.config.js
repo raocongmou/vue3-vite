@@ -10,6 +10,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import vueSetupExtend from 'unplugin-vue-setup-extend-plus/vite'
+// import { mockApiPlugin } from './scripts/mockApiPlugin.js'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -33,6 +34,10 @@ export default defineConfig(({ mode }) => {
       vue(),
       vueJsx(),
       vueSetupExtend(),
+      // mockApiPlugin({
+      //   enabled: env.VITE_USE_MOCK === 'true',
+      //   base: env.VITE_APP_BASE_API,
+      // }),
       AutoImport({
         resolvers: [
           ElementPlusResolver(), // 自动导入图标组件

@@ -5,6 +5,7 @@ import type { ComponentPublicInstance } from 'vue'
 import dayjs from 'dayjs'
 import BtnCodeConstant from '@/constant/btnCodeConstant'
 import Edit from '../Edit.vue'
+import RoleAssign from '../RoleAssign.vue'
 
 type RTableExpose = {
   query: (isResetPager?: boolean) => void
@@ -13,7 +14,7 @@ type RTableExpose = {
 const useIndex = () => {
   const tableRef = ref<ComponentPublicInstance<RTableExpose> | null>(null)
   const editRef = ref<InstanceType<typeof Edit> | null>(null)
-  const instance = getCurrentInstance()
+  const roleAssignRef = ref<InstanceType<typeof RoleAssign> | null>(null)
   const buttons = ref<VxeToolbarPropTypes.Buttons>([
     {
       name: '新增',
@@ -45,10 +46,10 @@ const useIndex = () => {
     },
     {
       name: '分配角色',
-      code: BtnCodeConstant.view,
+      code: BtnCodeConstant.roleAssign,
       status: 'info',
       icon: 'vxe-icon-add-users',
-      color: '#eb591d',
+      className: 'rtable-toolbar-btn--orange',
       permissionCode: 'roleManageActionDelete',
     },
   ])
@@ -188,6 +189,9 @@ const useIndex = () => {
     view: (currentRow: any) => {
       editRef.value?.open(currentRow, 'view')
     },
+    roleAssign: (currentRow: any) => {
+      roleAssignRef.value?.open(currentRow)
+    },
   }
 
   const handleToolbarButtonClick = (
@@ -196,6 +200,7 @@ const useIndex = () => {
     currentRow: any,
   ) => {
     const action = buttonActions[btn.code as string]
+    if (!action) return
     action(currentRow)
   }
 
@@ -212,6 +217,7 @@ const useIndex = () => {
     handleToolbarButtonClick,
     tableRef,
     editRef,
+    roleAssignRef,
   }
 }
 

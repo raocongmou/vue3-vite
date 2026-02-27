@@ -10,23 +10,29 @@
     @toolbar-button-click="handleToolbarButtonClick"
   />
   <Edit ref="editRef" @reload="reload" />
+  <RoleAssign ref="roleAssignRef" @reload="reload" />
 </template>
 
 <script setup lang="ts">
-  import { getUserList } from '@/api/system/user'
-  import RTable from '@/components/RTable/index.vue'
-  import Edit from './Edit.vue'
-  import useIndex from './hooks/useIndex'
+    import { getUserList } from '@/api/system/user'
+    import RTable from '@/components/RTable/index.vue'
+    import Edit from './Edit.vue'
+    import RoleAssign from './RoleAssign.vue'
+    import useIndex from './hooks/useIndex'
 
-  const {
-    buttons,
-    formConfig,
-    columns,
-    reload,
-    handleToolbarButtonClick,
-    tableRef,
-    editRef,
-  } = useIndex()
+    const {
+      buttons,
+      formConfig,
+      columns,
+      reload,
+      handleToolbarButtonClick,
+      tableRef,
+      editRef,
+      roleAssignRef,
+    } = useIndex()
+
+
+  
 </script>
 
 <style lang="scss" scoped></style>

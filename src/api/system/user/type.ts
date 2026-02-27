@@ -20,6 +20,20 @@ export interface userInfoInter {
   avatar: string
 }
 
+export interface userRoleIdsDTO {
+  userId: number
+  roleIds: number[]
+}
+
+export interface userRoleIdsResponse extends requestResultInter<userRoleIdsDTO> {
+  data: userRoleIdsDTO
+}
+
+export interface assignUserRolesForm {
+  userId: number
+  roleIds: number[]
+}
+
 export interface loginResponse extends requestResultInter<dataInter> {
   data: dataInter
 }
@@ -34,6 +48,7 @@ export interface userQueryInter extends userInter {
 }
 
 export interface userInter {
+  id?: number
   username?: string // 用户名
   phone?: number // 手机号
   nickname?: string // 昵称
@@ -41,6 +56,7 @@ export interface userInter {
   gender?: number // 性别
   avatar?: string // 头像
   status?: number // 状态
+  roleList?: any[]
   createTime?: string // 创建时间
   updateTime?: string // 更新时间
   createBy?: number // 创建人
