@@ -89,24 +89,24 @@
 <style lang="scss" scoped>
   .tags-view {
     width: 100%;
-    height: 35px;
+    height: 30px;
     box-sizing: border-box;
   }
   :deep(.el-tabs__item) {
     border: none !important;
-    height: 32px !important;
-    line-height: 32px;
+    height: 28px !important;
+    line-height: 28px;
     margin-right: 6px;
-    padding: 10px;
+    padding: 0 10px;
     background-color: #fff;
     // color: #000;
   }
   :deep(.el-tabs__nav) {
     width: 100%;
-    height: 35px;
+    height: 30px;
     border: none !important;
     display: flex;
-    align-items: end;
+    align-items: center;
   }
 
   :deep(.el-tabs__item:last-child) {
@@ -121,5 +121,6 @@
   }
   :deep(.el-tabs__header) {
     border: none;
+    margin: 0;
   }
 </style>

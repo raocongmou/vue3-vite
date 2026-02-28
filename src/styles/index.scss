@@ -1,5 +1,67 @@
 @use './reset.scss';
 @use './element-plus-cover.scss';
+
+:root {
+  color-scheme: light;
+  --app-bg: #f6f8fa;
+  --app-surface: #ffffff;
+  --app-surface-muted: #f6f8fa;
+  --app-text: #24292f;
+  --app-text-muted: #57606a;
+  --app-border: #d0d7de;
+  --app-accent: #0969da;
+  --app-bg-image: url('@/assets/images/dashboard-bg.jpg');
+  --el-color-primary: #0969da;
+  --el-text-color-primary: #24292f;
+  --el-text-color-regular: #24292f;
+  --el-text-color-secondary: #57606a;
+  --el-border-color: #d0d7de;
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f6f8fa;
+  --vxe-ui-font-color: #24292f;
+  --vxe-ui-layout-background-color: #ffffff;
+  --vxe-ui-table-header-background-color: #f6f8fa;
+  --vxe-ui-table-border-color: #d0d7de;
+  --vxe-ui-table-row-striped-background-color: #f6f8fa;
+  --vxe-ui-table-row-hover-background-color: #eef2f6;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --app-bg: #0d1117;
+  --app-surface: #161b22;
+  --app-surface-muted: #0d1117;
+  --app-text: #c9d1d9;
+  --app-text-muted: #8b949e;
+  --app-border: #30363d;
+  --app-accent: #2f81f7;
+  --app-bg-image: none;
+  --el-color-primary: #2f81f7;
+  --el-text-color-primary: #c9d1d9;
+  --el-text-color-regular: #c9d1d9;
+  --el-text-color-secondary: #8b949e;
+  --el-border-color: #30363d;
+  --el-bg-color: #161b22;
+  --el-bg-color-page: #0d1117;
+  --vxe-ui-font-color: #c9d1d9;
+  --vxe-ui-layout-background-color: #161b22;
+  --vxe-ui-table-header-background-color: #21262d;
+  --vxe-ui-table-border-color: #30363d;
+  --vxe-ui-table-row-striped-background-color: #0f141b;
+  --vxe-ui-table-row-hover-background-color: #1f2428;
+}
+
+body,
+#app {
+  background: var(--app-bg);
+  color: var(--app-text);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
 // ::-webkit-scrollbar {
 //   width: 10px;
 // }

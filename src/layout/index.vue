@@ -54,14 +54,16 @@
     height: 100vh;
     position: relative;
     z-index: 9;
-    background-image: url('@/assets/images/dashboard-bg.jpg');
+    background-image: var(--app-bg-image);
     background-size: cover;
+    background-color: var(--app-bg);
     &-sidebar {
       position: absolute;
       width: $sidebar-width;
       height: 100%;
-      background-color: $sidebar-background-color;
-      opacity: 0.6;
+      background-color: var(--app-surface);
+      border: 1px solid var(--app-border);
+      opacity: 1;
       z-index: 1;
       transition: all 0.7s ease;
       &-collapse {
@@ -73,7 +75,8 @@
       right: $pixel-10;
       width: calc(100% - $sidebar-width - $pixel-10 - $pixel-10);
       height: $tabbar-height;
-      background-color: #fff9;
+      background-color: var(--app-surface);
+      border: 1px solid var(--app-border);
       z-index: 1;
       transition: all 0.7s ease;
       &-collapse {
@@ -86,8 +89,8 @@
       top: calc($tabbar-height + $pixel-10);
       right: $pixel-10;
       height: calc(100vh - $tabbar-height - $pixel-10 - $pixel-10);
-      // background-color: $sidebar-background-color;
-      // background-color: #fff9;
+      background-color: var(--app-surface);
+      border: 1px solid var(--app-border);
       z-index: 1;
       overflow: auto;
       transition: all 0.7s ease;
