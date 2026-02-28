@@ -3,8 +3,6 @@ import StatusConstant from '@/constant/statusConstant'
 import { ElMessage } from 'element-plus'
 import LocalStorage from './localStorage'
 import router from '@/router'
-import useUserStore from '@/store/modules/user'
-import pinia from '@/store'
 
 console.log(
   'import.meta.env.VITE_APP_BASE_API',
@@ -27,6 +25,24 @@ let isRefreshing = false
 const refreshQueue: Array<(token: string) => void> = []
 const refreshFailQueue: Array<(error: any) => void> = []
 
+const updateStoreToken = async (token: string) => {
+  const [{ default: useUserStore }, { default: pinia }] = await Promise.all([
+    import('@/store/modules/user'),
+    import('@/store'),
+  ])
+  const userStore = useUserStore(pinia)
+  userStore.token = token
+}
+
+const clearStoreAuth = async () => {
+  const [{ default: useUserStore }, { default: pinia }] = await Promise.all([
+    import('@/store/modules/user'),
+    import('@/store'),
+  ])
+  const userStore = useUserStore(pinia)
+  userStore.remove()
+}
+
 // 请求拦截器
 request.interceptors.request.use((config) => {
   const token = LocalStorage.get('token')
@@ -43,7 +59,7 @@ request.interceptors.response.use(
   },
   (err) => {
     const response = err.response
-    const originalConfig = err.config || {}
+    const originalConfig = (err.config || {}) as any
 
     if (
       response &&
@@ -68,13 +84,12 @@ request.interceptors.response.use(
       isRefreshing = true
       return refreshClient
         .post('/user/refreshToken')
-        .then((refreshRes) => {
+        .then(async (refreshRes) => {
           const data = refreshRes?.data || refreshRes
           if (data?.code === 200 && data?.data?.token) {
             const newToken = data.data.token
             LocalStorage.set('token', newToken)
-            const userStore = useUserStore(pinia)
-            userStore.token = newToken
+            await updateStoreToken(newToken)
 
             refreshQueue.forEach((cb) => cb(newToken))
             refreshQueue.length = 0
@@ -87,13 +102,12 @@ request.interceptors.response.use(
 
           throw new Error('refresh token failed')
         })
-        .catch((refreshErr) => {
+        .catch(async (refreshErr) => {
           refreshFailQueue.forEach((cb) => cb(refreshErr))
           refreshQueue.length = 0
           refreshFailQueue.length = 0
 
-          const userStore = useUserStore(pinia)
-          userStore.remove()
+          await clearStoreAuth()
           LocalStorage.clear()
           router.push('/login')
           return Promise.reject(refreshErr)

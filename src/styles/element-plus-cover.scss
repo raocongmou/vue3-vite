@@ -20,7 +20,8 @@
   min-width: unset !important;
 }
 
-.vxe-toolbar .vxe-button.rtable-toolbar-btn--orange.type--button:not(.is--disabled) {
+.vxe-toolbar
+  .vxe-button.rtable-toolbar-btn--orange.type--button:not(.is--disabled) {
   background-color: #eb591d !important;
   border-color: #eb591d !important;
   color: #fff !important;
@@ -33,7 +34,9 @@
 }
 
 .vxe-toolbar
-  .vxe-button.rtable-toolbar-btn--orange.type--button:not(.is--disabled):active {
+  .vxe-button.rtable-toolbar-btn--orange.type--button:not(
+    .is--disabled
+  ):active {
   background-color: #d34f1b !important;
   border-color: #d34f1b !important;
 }

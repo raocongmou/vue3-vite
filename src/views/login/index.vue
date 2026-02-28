@@ -159,7 +159,8 @@
           loading.value = false
           ElNotification.error({
             title: t('login.loginFailed'),
-            message: typeof err === 'string' ? err : err?.message ?? String(err),
+            message:
+              typeof err === 'string' ? err : (err?.message ?? String(err)),
           })
           await generateValidateCodeApi()
         } finally {
