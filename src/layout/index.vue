@@ -9,9 +9,9 @@
       <Tabbar />
       <TagsView />
     </div>
-    <el-scrollbar :class="getMainClass">
+    <div :class="getMainClass">
       <Main />
-    </el-scrollbar>
+    </div>
   </div>
 </template>
 
@@ -75,7 +75,7 @@
       right: $pixel-10;
       width: calc(100% - $sidebar-width - $pixel-10 - $pixel-10);
       height: $tabbar-height;
-      background-color: var(--app-surface);
+      background-color: var(--app-surface-muted);
       border: 1px solid var(--app-border);
       z-index: 1;
       transition: all 0.7s ease;
@@ -92,7 +92,7 @@
       background-color: var(--app-surface);
       border: 1px solid var(--app-border);
       z-index: 1;
-      overflow: auto;
+      overflow: hidden;
       transition: all 0.7s ease;
       border-radius: 10px 10px 10px 10px;
       &-collapse {

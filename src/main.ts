@@ -58,7 +58,10 @@ const setThemeColor = (color: string) => {
       mix(color, '#ffffff', i / 10),
     )
   }
-  root.style.setProperty('--el-color-primary-dark-2', mix(color, '#000000', 0.2))
+  root.style.setProperty(
+    '--el-color-primary-dark-2',
+    mix(color, '#000000', 0.2),
+  )
   root.style.setProperty('--vxe-ui-font-primary-color', color)
 }
 

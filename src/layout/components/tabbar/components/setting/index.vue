@@ -129,7 +129,10 @@
       </div>
     </template>
     <el-scrollbar class="setting-notify-list">
-      <el-empty v-if="notifications.length === 0" description="No notifications" />
+      <el-empty
+        v-if="notifications.length === 0"
+        description="No notifications"
+      />
       <ul v-else>
         <li
           v-for="item in notifications"
@@ -245,7 +248,10 @@
         mix(color, '#ffffff', i / 10),
       )
     }
-    root.style.setProperty('--el-color-primary-dark-2', mix(color, '#000000', 0.2))
+    root.style.setProperty(
+      '--el-color-primary-dark-2',
+      mix(color, '#000000', 0.2),
+    )
     root.style.setProperty('--vxe-ui-font-primary-color', color)
     LocalStorage.set('theme-color', color)
   }
@@ -333,8 +339,7 @@
     const prefersReduced = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
-    const canTransition =
-      'startViewTransition' in document && !prefersReduced
+    const canTransition = 'startViewTransition' in document && !prefersReduced
     if (!canTransition) {
       applyTheme(nextDark)
       return

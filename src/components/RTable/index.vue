@@ -1,21 +1,24 @@
 <template>
-  <el-card style="margin-bottom: 10px">
-    <RForm
-      v-if="showForm"
-      :formConfig="formConfig"
-      :labelWidth="labelWidth"
-      @search="handleSearch"
-    />
-  </el-card>
-  <el-card>
-    <!-- @vue-ignore -->
-    <vxe-grid
-      ref="gridRef"
-      v-bind="gridOptions"
-      v-on="gridEvents"
-      :loading="loading"
-    />
-  </el-card>
+  <div class="r-table">
+    <el-card v-if="showForm" class="r-table__form">
+      <RForm
+        :formConfig="formConfig"
+        :labelWidth="labelWidth"
+        @search="handleSearch"
+      />
+    </el-card>
+    <el-card class="r-table__grid">
+      <div ref="gridContainerRef" class="r-table__grid-container">
+        <!-- @vue-ignore -->
+        <vxe-grid
+          ref="gridRef"
+          v-bind="gridOptions"
+          v-on="gridEvents"
+          :loading="loading"
+        />
+      </div>
+    </el-card>
+  </div>
 </template>
 
 <script setup lang="ts" generic="T" name="RTable">
@@ -31,6 +34,9 @@
   import RForm from '../RForm/index.vue'
 
   const gridRef = ref<VxeGridInstance | null>(null)
+  const gridContainerRef = ref<HTMLElement | null>(null)
+  const gridHeight = ref(420)
+  let resizeObserver: ResizeObserver | null = null
   const props = withDefaults(
     defineProps<{
       primaryKey: string
@@ -84,6 +90,31 @@
 
   const params = ref<any>({})
 
+  const updateGridHeight = () => {
+    const containerEl = gridContainerRef.value
+    if (!containerEl) return
+
+    const nextHeight = Math.floor(containerEl.clientHeight)
+    if (nextHeight > 0) {
+      gridHeight.value = nextHeight
+    }
+  }
+
+  onMounted(() => {
+    nextTick(updateGridHeight)
+    if (gridContainerRef.value) {
+      resizeObserver = new ResizeObserver(updateGridHeight)
+      resizeObserver.observe(gridContainerRef.value)
+    }
+    window.addEventListener('resize', updateGridHeight)
+  })
+
+  onUnmounted(() => {
+    resizeObserver?.disconnect()
+    resizeObserver = null
+    window.removeEventListener('resize', updateGridHeight)
+  })
+
   const gridOptions = computed<VxeGridProps<T>>(() => ({
     border: false,
     stripe: false,
@@ -95,6 +126,7 @@
     showHeader: true,
     showOverflow: true,
     loading: false,
+    height: gridHeight.value,
     pagerConfig: {
       ...pager.value,
       enabled: props.showPager,
@@ -233,3 +265,37 @@
     query,
   })
 </script>
+
+<style lang="scss" scoped>
+  .r-table {
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .r-table__form {
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  .r-table__grid {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .r-table__grid :deep(.el-card__body) {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .r-table__grid-container {
+    flex: 1;
+    min-height: 0;
+  }
+</style>
